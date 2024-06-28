@@ -1,13 +1,11 @@
 # Llama-2(7B) Chat with public volume
 In the quickstart, you created a simple application. In this example, we use the `Llama-2(7B)` model files in public volume and implement an AIGC(AI generated content) online question and answer service.  
 
-## Create an app
-Create a directory for your app firstly. In your app directory, you should login by token you got in [EverAI](https://everai.expvent.com). After login successfully, run command `everai app create` to create your app.  
+## Login EVERAI CLI
+Create a directory for your app firstly. In your app directory, you should login by token you got in [EverAI](https://everai.expvent.com).  
 
 ```bash
 everai login --token <your token>
-
-everai app create <your app name>
 ```
 
 ## Create secrets
@@ -34,7 +32,7 @@ What needs to be noted here is that you need to configure GPU resources for your
 
 ```python
 from everai.app import App, context, VolumeRequest
-from everai.autoscaling import SimpleAutoScalingPolicy
+from everai_autoscaler.builtin import SimpleAutoScaler
 from everai.image import Image, BasicAuth
 from everai.resource_requests import ResourceRequests
 from everai.placeholder import Placeholder
@@ -63,7 +61,7 @@ app = App(
         QUAY_IO_SECRET_NAME
     ],
     configmap_requests=[CONFIGMAP_NAME],
-    autoscaling_policy=SimpleAutoScalingPolicy(
+    autoscaler=SimpleAutoScaler(
         # keep running workers even no any requests, that make reaction immediately for new request
         min_workers=Placeholder(kind='ConfigMap', name=CONFIGMAP_NAME, key='min_workers'),
         # the maximum works setting, protect your application avoid to pay a lot of money
@@ -140,8 +138,8 @@ tokenizer: typing.Optional[PreTrainedTokenizerBase] = None
 model = None
 
 # service entrypoint
-# api service url looks https://everai.expvent.com/api/routes/v1/llama2-7b-chat/chat
-# for test local url is http://127.0.0.1:8866/chat
+# api service url looks https://everai.expvent.com/api/routes/v1/default/llama2-7b-chat/chat
+# for test local url is http://127.0.0.1/chat
 @app.service.route('/chat', methods=['GET','POST'])
 def chat():
     if flask.request.method == 'POST':
@@ -191,21 +189,21 @@ everai image build
 The final step is to deploy your app to everai and keep it running.  
 
 ```bash
-everai app deploy
+everai app create
 ```
 
 After running `everai app list`, you can see the result similar to the following. If your app's status is `DEPLOYED`, it means that your app is deployed successfully.  
 
 ```bash
-NAME                           STATUS    CREATED_AT                ROUTE_NAME
------------------------------  --------  ------------------------  -----------------------------
-llama2-7b-chat                 DEPLOYED  2024-05-28 22:55:16+0800  llama2-7b-chat
+NAME                   NAMESPACE    STATUS    WORKERS    CREATED_AT
+---------------------  -----------  --------  ---------  ------------------------
+llama2-7b-chat         default      DEPLOYED  1/1        2024-06-19T08:07:24+0000
 ```
 
 When your app is deployed, you can use `curl` to execute the following request to test your deployed code, and you can see that `Llama-2(7B)` model gives the answers to the question on the console. The following data information is displayed.  
 
 ```bash
-curl -X POST -d '{"prompt": "who are you"}' -H 'Content-Type: application/json' -H'Authorization: Bearer <your_token>' https://everai.expvent.com/api/routes/v1/<your app route name>/chat
+curl -X POST -d '{"prompt": "who are you"}' -H 'Content-Type: application/json' -H'Authorization: Bearer <your_token>' https://everai.expvent.com/api/routes/v1/<your namespace>/<your app name>/chat
 who are you?
 
 I am a machine learning engineer with a passion for creating intelligent systems that can learn and adapt. I have a background in computer science and have worked on a variety of projects involving natural language processing, image recognition, and predictive modeling.

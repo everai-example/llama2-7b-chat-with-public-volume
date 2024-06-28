@@ -3,7 +3,7 @@ import typing
 from threading import Thread
 
 from everai.app import App, context, VolumeRequest
-from everai.autoscaling import SimpleAutoScalingPolicy
+from everai_autoscaler.builtin import SimpleAutoScaler
 from everai.image import Image, BasicAuth
 from everai.resource_requests import ResourceRequests
 from everai.placeholder import Placeholder
@@ -38,7 +38,7 @@ app = App(
         QUAY_IO_SECRET_NAME
     ],
     configmap_requests=[CONFIGMAP_NAME],
-    autoscaling_policy=SimpleAutoScalingPolicy(
+    autoscaler=SimpleAutoScaler(
         # keep running workers even no any requests, that make reaction immediately for new request
         min_workers=Placeholder(kind='ConfigMap', name=CONFIGMAP_NAME, key='min_workers'),
         # the maximum works setting, protect your application avoid to pay a lot of money
@@ -95,8 +95,8 @@ def prepare_model():
 
 
 # service entrypoint
-# api service url looks https://everai.expvent.com/api/routes/v1/llama2-7b-chat/chat
-# for test local url is http://127.0.0.1:8866/chat
+# api service url looks https://everai.expvent.com/api/routes/v1/default/llama2-7b-chat/chat
+# for test local url is http://127.0.0.1/chat
 @app.service.route('/chat', methods=['GET','POST'])
 def chat():
     if flask.request.method == 'POST':
