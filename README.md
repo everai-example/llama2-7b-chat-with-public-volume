@@ -22,6 +22,17 @@ everai secret create your-quay-io-secret-name \
 >
 >[quay.io](https://quay.io/) is a well-known public image registry. Well-known image registry similar to [quay.io](https://quay.io/) include [Docker Hub](https://hub.docker.com/), [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry), [Google Container Registry](https://cloud.google.com/artifact-registry), etc.  
 
+## Create configmap
+>Optional, but you can use configmap for adjust autoscaling policy after deploying the image. 
+```shell
+everai configmap create llama2-configmap \ 
+  --from-literal min_workers=1 \
+  --from-literal max_workers=5 \
+  --from-literal max_queue_size=2 \
+  --from-literal scale_up_step=1 \
+  --from-literal max_idle_time=60
+```
+
 ## Write your app code in python
 ### Basic setup
 There is an example code in [app.py](https://github.com/everai-example/llama2-7b-chat-with-public-volume/blob/main/app.py).  
