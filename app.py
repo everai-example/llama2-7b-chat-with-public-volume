@@ -31,7 +31,7 @@ app = App(
     APP_NAME,
     image=image,
     volume_requests=[
-        VolumeRequest(name=VOLUME_NAME, create_if_not_exists=True),
+        VolumeRequest(name=VOLUME_NAME),
     ],
     secret_requests=[
         HUGGINGFACE_SECRET_NAME,
