@@ -1,6 +1,8 @@
 torch~=2.2.2
-everai~=0.2.22
+everai~=0.2.24
 transformers~=4.39.3
 accelerate~=0.30.1
 protobuf~=5.26.1
 sentencepiece~=0.2.0
+Flask~=3.0.3
+Werkzeug~=3.0.3
