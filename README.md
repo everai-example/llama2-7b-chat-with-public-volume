@@ -203,7 +203,7 @@ The final step is to deploy your app to everai and keep it running.
 everai app create
 ```
 
-After running `everai app list`, you can see the result similar to the following. `CREATED_AT` uses UTC time display.   
+After running `everai app list`, you can see the result similar to the following. Note that `CREATED_AT` uses UTC time display.   
 
 If your app's status is `DEPLOYED`, and the number of ready worker containers is equal to the expected number of worker containers, which is `1/1`, it means that your app is deployed successfully.  
 
