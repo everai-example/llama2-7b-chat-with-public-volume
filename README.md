@@ -28,7 +28,7 @@ everai secret create your-quay-io-secret-name \
 everai configmap create llama2-configmap \ 
   --from-literal min_workers=1 \
   --from-literal max_workers=5 \
-  --from-literal min_free_workers=2 \
+  --from-literal min_free_workers=1 \
   --from-literal scale_up_step=1 \
   --from-literal max_idle_time=60
 ```
@@ -98,7 +98,7 @@ app = App(
 
 ### Load model
   
-You can load the model using the model file in the public volume `expvent/models--meta-llama--llama-2-7b-chat-hf` we provide.  
+You can load the model using the model file in the public volume `everai/models--meta-llama--llama-2-7b-chat-hf` we provide.  
 
 ```python
 import torch
