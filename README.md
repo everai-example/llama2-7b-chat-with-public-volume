@@ -50,7 +50,7 @@ from everai.placeholder import Placeholder
 from image_builder import IMAGE
 
 APP_NAME = '<your app name>'
-VOLUME_NAME = 'expvent/models--meta-llama--llama-2-7b-chat-hf'
+VOLUME_NAME = 'everai/models--meta-llama--llama-2-7b-chat-hf'
 MODEL_NAME = 'meta-llama/Llama-2-7b-chat-hf'
 HUGGINGFACE_SECRET_NAME = 'your-huggingface-secret-name'
 QUAY_IO_SECRET_NAME = 'your-quay-io-secret-name'
@@ -135,7 +135,7 @@ def prepare_model():
 If you want to use `everai app run` to debug this example locally, your local debugging environment needs to have GPU resources, and use `everai volume pull` command to pull the model file from the cloud to the local environment before debugging the code.  
 
 ```bash
-everai volume pull expvent/models--meta-llama--llama-2-7b-chat-hf
+everai volume pull everai/models--meta-llama--llama-2-7b-chat-hf
 ```
 
 ### Generate inference service
