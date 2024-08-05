@@ -22,6 +22,12 @@ everai secret create your-quay-io-secret-name \
 >
 >[quay.io](https://quay.io/) is a well-known public image registry. Well-known image registry similar to [quay.io](https://quay.io/) include [Docker Hub](https://hub.docker.com/), [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry), [Google Container Registry](https://cloud.google.com/artifact-registry), etc.  
 
+You should create a secret to access [Hugging Face](https://huggingface.co/) as well.
+```bash
+everai secret create your-huggingface-secret-name \
+  --from-literal token-key-as-your-wish=<your huggingface token>
+```
+
 ## Create configmap
 >Optional, but you can use configmap for adjust autoscaling policy after deploying the image. 
 ```shell
