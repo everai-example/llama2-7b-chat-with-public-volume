@@ -51,7 +51,7 @@ What needs to be noted here is that you need to configure GPU resources for your
 from everai.app import App, context, VolumeRequest
 from everai_autoscaler.builtin import FreeWorkerAutoScaler
 from everai.image import Image, BasicAuth
-from everai.resource_requests import ResourceRequests
+from everai.resource_requests import ResourceRequests, CPUConstraints
 from everai.placeholder import Placeholder
 from image_builder import IMAGE
 
@@ -98,6 +98,9 @@ app = App(
         gpu_constraints=[
             "A100 40G"
         ],
+        cpu_constraints=CPUConstraints(
+            platforms=['amd64', 'arm64']
+        )
     ),
 )
 ```
